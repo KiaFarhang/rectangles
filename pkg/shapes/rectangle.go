@@ -10,8 +10,13 @@ Rectangle represents a rectangle in a 2D plane. Clients should not construct a R
 instead, use the NewRectangle function.
 */
 type Rectangle struct {
-	topLeft     *Point
-	bottomRight *Point
+	/*
+		Note for reviewers: I didn't use pointers to these fields because they're small enough
+		(two int values) that copying them shouldn't cost much memory. And by avoiding pointers,
+		we get immutability because we're working with copies. To me, worth the tradeoff in this case.
+	*/
+	topLeft     Point
+	bottomRight Point
 }
 
 var (
@@ -26,7 +31,7 @@ An error is returned if any of the following conditions are true:
 - Bottom-right x <= top-left x
 - Bottom-right y >= top-left y
 */
-func NewRectangle(topLeft, bottomRight *Point) (*Rectangle, error) {
+func NewRectangle(topLeft, bottomRight Point) (*Rectangle, error) {
 	if bottomRight.X <= topLeft.X || bottomRight.Y >= topLeft.Y {
 		return nil, errInvalidRectangleCoordinates
 	}
