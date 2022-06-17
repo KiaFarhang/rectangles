@@ -15,7 +15,7 @@ func NewRectangle(topLeft, bottomRight *Point) (*Rectangle, error) {
 	if topLeft.X >= bottomRight.X || topLeft.Y <= bottomRight.Y {
 		return nil, errInvalidRectangleCoordinates
 	}
-	return &Rectangle{}, nil
+	return &Rectangle{topLeft, bottomRight}, nil
 }
 
 func (r *Rectangle) contains(other *Rectangle) bool {

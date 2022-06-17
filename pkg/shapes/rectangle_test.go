@@ -26,6 +26,19 @@ func TestRectangle_Constructor(t *testing.T) {
 
 		}
 	})
+	t.Run("Returns a Rectangle with the given points if their positioning is valid", func(t *testing.T) {
+		topLeft := &Point{2, 5}
+		bottomRight := &Point{4, 2}
+
+		rectangle, err := NewRectangle(topLeft, bottomRight)
+
+		assert.Equal(t, rectangle.topLeft.X, topLeft.X)
+		assert.Equal(t, rectangle.topLeft.Y, topLeft.Y)
+		assert.Equal(t, rectangle.bottomRight.X, bottomRight.X)
+		assert.Equal(t, rectangle.bottomRight.Y, bottomRight.Y)
+		assert.NoError(t, err)
+
+	})
 }
 
 func TestContainment(t *testing.T) {
