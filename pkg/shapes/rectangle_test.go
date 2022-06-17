@@ -42,7 +42,7 @@ func TestRectangle_Constructor(t *testing.T) {
 }
 
 func TestContainment(t *testing.T) {
-	t.Run("returns true if the other rectangle is the topLeft.Y <= bottomRight.Ysame size + location as the first", func(t *testing.T) {
+	t.Run("returns true if the other rectangle is the same size and coordinates as the first", func(t *testing.T) {
 		topLeft := Point{X: 4, Y: 4}
 		bottomRight := Point{X: 6, Y: 2}
 
@@ -53,6 +53,50 @@ func TestContainment(t *testing.T) {
 		assert.NoError(t, err)
 
 		assert.Equal(t, true, rectangleA.Contains(rectangleB))
+	})
+	t.Run("returns true if the other rectangle is fully contained within the first", func(t *testing.T) {
+		topLeftA := Point{X: 2, Y: 4}
+		bottomRightA := Point{X: 5, Y: 2}
 
+		topLeftB := Point{X: 3, Y: 3}
+		bottomRightB := Point{X: 4, Y: 2}
+
+		rectangleA, err := NewRectangle(topLeftA, bottomRightA)
+		assert.NoError(t, err)
+
+		rectangleB, err := NewRectangle(topLeftB, bottomRightB)
+		assert.NoError(t, err)
+
+		assert.Equal(t, true, rectangleA.Contains(rectangleB))
+	})
+	t.Run("Returns false if the other rectangle is completely outside the first", func(t *testing.T) {
+		topLeftA := Point{X: 2, Y: 4}
+		bottomRightA := Point{X: 5, Y: 2}
+
+		topLeftB := Point{X: 2, Y: 7}
+		bottomRightB := Point{X: 3, Y: 6}
+
+		rectangleA, err := NewRectangle(topLeftA, bottomRightA)
+		assert.NoError(t, err)
+
+		rectangleB, err := NewRectangle(topLeftB, bottomRightB)
+		assert.NoError(t, err)
+
+		assert.Equal(t, false, rectangleA.Contains(rectangleB))
+	})
+	t.Run("Returns false if the other rectangle is partially contained within the first", func(t *testing.T) {
+		topLeftA := Point{X: 2, Y: 4}
+		bottomRightA := Point{X: 5, Y: 2}
+
+		topLeftB := Point{X: 3, Y: 3}
+		bottomRightB := Point{X: 6, Y: 2}
+
+		rectangleA, err := NewRectangle(topLeftA, bottomRightA)
+		assert.NoError(t, err)
+
+		rectangleB, err := NewRectangle(topLeftB, bottomRightB)
+		assert.NoError(t, err)
+
+		assert.Equal(t, false, rectangleA.Contains(rectangleB))
 	})
 }

@@ -43,5 +43,19 @@ Contains returns whether the provided rectangle can be contained by this rectang
 Rectangles with the exact same coordinates can contain one another.
 */
 func (r *Rectangle) Contains(other *Rectangle) bool {
+	thisTopLeft := r.topLeft
+	otherTopLeft := other.topLeft
+
+	if otherTopLeft.X < thisTopLeft.X || otherTopLeft.Y > thisTopLeft.Y {
+		return false
+	}
+
+	thisBottomRight := r.bottomRight
+	otherBottomRight := other.bottomRight
+
+	if otherBottomRight.X > thisBottomRight.X || otherBottomRight.Y < thisBottomRight.Y {
+		return false
+	}
+
 	return true
 }
