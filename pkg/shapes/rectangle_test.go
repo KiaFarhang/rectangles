@@ -42,8 +42,17 @@ func TestRectangle_Constructor(t *testing.T) {
 }
 
 func TestContainment(t *testing.T) {
-	// t.Run("returns true if the other rectangle is the same size + location as the first", func(t *testing.T) {
-	// 	topLeft := Point{X: 4, Y: 4}
-	// 	bottomRight := Point{}
-	// })
+	t.Run("returns true if the other rectangle is the same size + location as the first", func(t *testing.T) {
+		topLeft := &Point{X: 4, Y: 4}
+		bottomRight := &Point{X: 6, Y: 2}
+
+		rectangleA, err := NewRectangle(topLeft, bottomRight)
+		assert.NoError(t, err)
+
+		rectangleB, err := NewRectangle(topLeft, bottomRight)
+		assert.NoError(t, err)
+
+		assert.Equal(t, true, rectangleA.Contains(rectangleB))
+
+	})
 }
