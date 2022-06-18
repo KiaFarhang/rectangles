@@ -65,24 +65,32 @@ Adjacent returns whether this rectangle and the other rectangle provided
 share a side.
 */
 func (r *Rectangle) Adjacent(other *Rectangle) bool {
-	// other shares r's top
-	if other.bottomRight.Y == r.topLeft.Y {
-		return true
+	xIsInRange := (other.topLeft.X >= r.topLeft.X && other.topLeft.X < r.bottomRight.X) || (other.bottomRight.X > r.topLeft.X && other.bottomRight.X <= r.bottomRight.X)
+
+	if xIsInRange {
+		// Adjacent on top
+		if other.bottomRight.Y == r.topLeft.Y {
+			return true
+		}
+
+		// Adjacent on bottom
+		if other.topLeft.Y == r.bottomRight.Y {
+			return true
+		}
 	}
 
-	// other shares r's right
-	if other.topLeft.X == r.bottomRight.X && other.topLeft.Y > r.bottomRight.Y {
-		return true
-	}
+	yIsInRange := (other.topLeft.Y <= r.topLeft.Y && other.topLeft.Y > r.bottomRight.Y) || (other.bottomRight.Y < r.topLeft.Y && other.bottomRight.Y <= r.bottomRight.Y)
 
-	// other shares r's bottom
-	if other.topLeft.Y == r.bottomRight.Y {
-		return true
-	}
+	if yIsInRange {
+		// Adjacent on the right
+		if other.topLeft.X == r.bottomRight.X {
+			return true
+		}
 
-	//other shares r's left
-	if other.bottomRight.X == r.topLeft.X {
-		return true
+		// Adjacent on the left
+		if other.bottomRight.X == r.topLeft.X {
+			return true
+		}
 	}
 
 	return false
