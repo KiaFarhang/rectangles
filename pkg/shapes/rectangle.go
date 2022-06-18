@@ -59,3 +59,31 @@ func (r *Rectangle) Contains(other *Rectangle) bool {
 
 	return true
 }
+
+/*
+Adjacent returns whether this rectangle and the other rectangle provided
+share a side.
+*/
+func (r *Rectangle) Adjacent(other *Rectangle) bool {
+	// other shares r's top
+	if other.bottomRight.Y == r.topLeft.Y {
+		return true
+	}
+
+	// other shares r's right
+	if other.topLeft.X == r.bottomRight.X && other.topLeft.Y > r.bottomRight.Y {
+		return true
+	}
+
+	// other shares r's bottom
+	if other.topLeft.Y == r.bottomRight.Y {
+		return true
+	}
+
+	//other shares r's left
+	if other.bottomRight.X == r.topLeft.X {
+		return true
+	}
+
+	return false
+}
