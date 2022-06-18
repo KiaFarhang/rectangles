@@ -129,49 +129,4 @@ func TestAdjacency(t *testing.T) {
 			assert.Equal(t, testCase.expected, rectangle.Adjacent(otherRectangle))
 		})
 	}
-	// t.Run("returns true if the other rectangle shares the first one's top", func(t *testing.T) {
-	// 	rectangleA, err := NewRectangle(Point{X: 2, Y: 4}, Point{X: 5, Y: 2})
-	// 	assert.NoError(t, err)
-
-	// 	rectangleB, err := NewRectangle(Point{X: 1, Y: 8}, Point{X: 6, Y: 4})
-	// 	assert.NoError(t, err)
-
-	// 	assert.True(t, rectangleA.Adjacent(rectangleB))
-	// })
-	// t.Run("returns true if the other rectangle shares the first one's right", func(t *testing.T) {
-	// 	rectangleA, err := NewRectangle(Point{X: 2, Y: 4}, Point{X: 5, Y: 2})
-	// 	assert.NoError(t, err)
-
-	// 	rectangleB, err := NewRectangle(Point{X: 5, Y: 6}, Point{X: 7, Y: 2})
-	// 	assert.NoError(t, err)
-
-	// 	assert.True(t, rectangleA.Adjacent(rectangleB))
-	// })
-	// t.Run("returns true if the other rectangle shares the first one's bottom", func(t *testing.T) {
-	// 	rectangleA, err := NewRectangle(Point{X: 2, Y: 4}, Point{X: 5, Y: 2})
-	// 	assert.NoError(t, err)
-
-	// 	rectangleB, err := NewRectangle(Point{X: 1, Y: 2}, Point{X: 3, Y: -6})
-	// 	assert.NoError(t, err)
-
-	// 	assert.True(t, rectangleA.Adjacent(rectangleB))
-	// })
-	// t.Run("returns true if the other rectangle shares the first one's left", func(t *testing.T) {
-	// 	rectangleA, err := NewRectangle(Point{X: 2, Y: 4}, Point{X: 5, Y: 2})
-	// 	assert.NoError(t, err)
-
-	// 	rectangleB, err := NewRectangle(Point{X: -3, Y: 3}, Point{X: 2, Y: 1})
-	// 	assert.NoError(t, err)
-
-	// 	assert.True(t, rectangleA.Adjacent(rectangleB))
-	// })
-	// t.Run("returns false if the rectangles share no sides", func(t *testing.T) {
-	// 	rectangleA, err := NewRectangle(Point{X: 2, Y: 4}, Point{X: 5, Y: 2})
-	// 	assert.NoError(t, err)
-
-	// 	rectangleB, err := NewRectangle(Point{X: 7, Y: 4}, Point{X: 10, Y: 3})
-	// 	assert.NoError(t, err)
-
-	// 	assert.False(t, rectangleA.Adjacent(rectangleB))
-	// })
 }
