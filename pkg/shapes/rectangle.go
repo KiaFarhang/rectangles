@@ -79,7 +79,7 @@ func (r *Rectangle) Adjacent(other *Rectangle) bool {
 		}
 	}
 
-	yIsInRange := (other.topLeft.Y <= r.topLeft.Y && other.topLeft.Y > r.bottomRight.Y) || (other.bottomRight.Y < r.topLeft.Y && other.bottomRight.Y <= r.bottomRight.Y)
+	yIsInRange := (other.topLeft.Y <= r.topLeft.Y && other.topLeft.Y > r.bottomRight.Y) || (other.bottomRight.Y < r.topLeft.Y && other.bottomRight.Y >= r.bottomRight.Y)
 
 	if yIsInRange {
 		// Adjacent on the right
