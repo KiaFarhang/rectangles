@@ -3,7 +3,9 @@ Package shapes implements code for working with 2D shapes
 */
 package shapes
 
-import "errors"
+import (
+	"errors"
+)
 
 /*
 Rectangle represents a rectangle in a 2D plane. Clients should not construct a Rectangle directly;
@@ -63,9 +65,24 @@ func (r *Rectangle) Contains(other *Rectangle) bool {
 /*
 Adjacent returns whether this rectangle and the other rectangle provided
 share a side. Rectangles that share a corner point are NOT considered adjacent.
+This function is reversible; if a.Adjacent(b) and b.Adjacent(a) will always return the
+same value.
 */
 func (r *Rectangle) Adjacent(other *Rectangle) bool {
-	xIsInRange := (other.topLeft.X >= r.topLeft.X && other.topLeft.X < r.bottomRight.X) || (other.bottomRight.X > r.topLeft.X && other.bottomRight.X <= r.bottomRight.X)
+	/*
+		Find the wider of the two rectangles. If the narrower one has an x value that could allow
+		for adjacency, check for adjacency. We need to know which rectangle is narrower to avoid
+		situations where calling a.Adjacent(b) returns true but b.Adjacent(a) returns false.
+	*/
+	widerRectangle := r
+	narrowerRectangle := other
+
+	if (other.bottomRight.X - other.topLeft.X) > (r.bottomRight.X - r.topLeft.X) {
+		widerRectangle = other
+		narrowerRectangle = r
+	}
+
+	xIsInRange := (narrowerRectangle.topLeft.X >= widerRectangle.topLeft.X && narrowerRectangle.topLeft.X < widerRectangle.bottomRight.X) || (narrowerRectangle.bottomRight.X > widerRectangle.topLeft.X && narrowerRectangle.bottomRight.X <= widerRectangle.bottomRight.X)
 
 	if xIsInRange {
 		// Adjacent on top
@@ -79,7 +96,15 @@ func (r *Rectangle) Adjacent(other *Rectangle) bool {
 		}
 	}
 
-	yIsInRange := (other.topLeft.Y <= r.topLeft.Y && other.topLeft.Y > r.bottomRight.Y) || (other.bottomRight.Y < r.topLeft.Y && other.bottomRight.Y >= r.bottomRight.Y)
+	tallerRectangle := r
+	shorterRectangle := other
+
+	if (other.topLeft.Y - other.bottomRight.Y) > (r.topLeft.Y - other.bottomRight.Y) {
+		tallerRectangle = other
+		shorterRectangle = r
+	}
+
+	yIsInRange := (shorterRectangle.topLeft.Y <= tallerRectangle.topLeft.Y && shorterRectangle.topLeft.Y > tallerRectangle.bottomRight.Y) || (shorterRectangle.bottomRight.Y < tallerRectangle.topLeft.Y && shorterRectangle.bottomRight.Y >= tallerRectangle.bottomRight.Y)
 
 	if yIsInRange {
 		// Adjacent on the right

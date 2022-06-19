@@ -128,6 +128,8 @@ func TestAdjacency(t *testing.T) {
 			otherRectangle, err := NewRectangle(testCase.topLeft, testCase.bottomRight)
 			assert.NoError(t, err)
 			assert.Equal(t, testCase.expected, rectangle.Adjacent(otherRectangle))
+			// Adjacency should work the same regardless of which rectangle you call it on
+			assert.Equal(t, testCase.expected, otherRectangle.Adjacent(rectangle))
 		})
 	}
 }
