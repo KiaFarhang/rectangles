@@ -120,6 +120,7 @@ func TestAdjacency(t *testing.T) {
 		{topLeft: Point{X: -1, Y: 6}, bottomRight: Point{X: 2, Y: 3}, expected: true, description: "adjacency on left side"},
 		{topLeft: Point{X: 2, Y: 1}, bottomRight: Point{X: 3, Y: 0}, expected: false, description: "no adjacency on bottom side"},
 		{topLeft: Point{X: 2, Y: 2}, bottomRight: Point{X: 3, Y: 0}, expected: true, description: "adjacency on bottom side"},
+		{topLeft: Point{X: 10, Y: 10}, bottomRight: Point{X: 14, Y: 7}, expected: false, description: "no adjacency"},
 	}
 
 	for _, testCase := range tests {
