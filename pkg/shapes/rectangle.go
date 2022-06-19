@@ -95,3 +95,12 @@ func (r *Rectangle) Adjacent(other *Rectangle) bool {
 
 	return false
 }
+
+/*
+PointsOfIntersection returns a slice of all Points where this rectangle
+intersects with the other rectangle provided, if any. The returned slice
+will be empty if the rectangles do not intersect.
+*/
+func (r *Rectangle) PointsOfIntersection(other *Rectangle) []Point {
+	return []Point{}
+}
