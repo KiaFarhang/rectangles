@@ -59,3 +59,39 @@ func (r *Rectangle) Contains(other *Rectangle) bool {
 
 	return true
 }
+
+/*
+Adjacent returns whether this rectangle and the other rectangle provided
+share a side. Rectangles that share a corner point are NOT considered adjacent.
+*/
+func (r *Rectangle) Adjacent(other *Rectangle) bool {
+	xIsInRange := (other.topLeft.X >= r.topLeft.X && other.topLeft.X < r.bottomRight.X) || (other.bottomRight.X > r.topLeft.X && other.bottomRight.X <= r.bottomRight.X)
+
+	if xIsInRange {
+		// Adjacent on top
+		if other.bottomRight.Y == r.topLeft.Y {
+			return true
+		}
+
+		// Adjacent on bottom
+		if other.topLeft.Y == r.bottomRight.Y {
+			return true
+		}
+	}
+
+	yIsInRange := (other.topLeft.Y <= r.topLeft.Y && other.topLeft.Y > r.bottomRight.Y) || (other.bottomRight.Y < r.topLeft.Y && other.bottomRight.Y >= r.bottomRight.Y)
+
+	if yIsInRange {
+		// Adjacent on the right
+		if other.topLeft.X == r.bottomRight.X {
+			return true
+		}
+
+		// Adjacent on the left
+		if other.bottomRight.X == r.topLeft.X {
+			return true
+		}
+	}
+
+	return false
+}

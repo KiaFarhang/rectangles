@@ -52,7 +52,7 @@ func TestContainment(t *testing.T) {
 		rectangleB, err := NewRectangle(topLeft, bottomRight)
 		assert.NoError(t, err)
 
-		assert.Equal(t, true, rectangleA.Contains(rectangleB))
+		assert.True(t, rectangleA.Contains(rectangleB))
 	})
 	t.Run("returns true if the other rectangle is fully contained within the first", func(t *testing.T) {
 		topLeftA := Point{X: 2, Y: 4}
@@ -67,9 +67,9 @@ func TestContainment(t *testing.T) {
 		rectangleB, err := NewRectangle(topLeftB, bottomRightB)
 		assert.NoError(t, err)
 
-		assert.Equal(t, true, rectangleA.Contains(rectangleB))
+		assert.True(t, rectangleA.Contains(rectangleB))
 	})
-	t.Run("Returns false if the other rectangle is completely outside the first", func(t *testing.T) {
+	t.Run("returns false if the other rectangle is completely outside the first", func(t *testing.T) {
 		topLeftA := Point{X: 2, Y: 4}
 		bottomRightA := Point{X: 5, Y: 2}
 
@@ -82,9 +82,9 @@ func TestContainment(t *testing.T) {
 		rectangleB, err := NewRectangle(topLeftB, bottomRightB)
 		assert.NoError(t, err)
 
-		assert.Equal(t, false, rectangleA.Contains(rectangleB))
+		assert.False(t, rectangleA.Contains(rectangleB))
 	})
-	t.Run("Returns false if the other rectangle is partially contained within the first", func(t *testing.T) {
+	t.Run("returns false if the other rectangle is partially contained within the first", func(t *testing.T) {
 		topLeftA := Point{X: 2, Y: 4}
 		bottomRightA := Point{X: 5, Y: 2}
 
@@ -97,6 +97,37 @@ func TestContainment(t *testing.T) {
 		rectangleB, err := NewRectangle(topLeftB, bottomRightB)
 		assert.NoError(t, err)
 
-		assert.Equal(t, false, rectangleA.Contains(rectangleB))
+		assert.False(t, rectangleA.Contains(rectangleB))
 	})
+}
+
+func TestAdjacency(t *testing.T) {
+	rectangle, _ := NewRectangle(Point{X: 2, Y: 4}, Point{X: 5, Y: 2})
+	type test struct {
+		topLeft     Point
+		bottomRight Point
+		expected    bool
+		description string
+	}
+	tests := []test{
+		{topLeft: Point{X: 6, Y: 4}, bottomRight: Point{X: 7, Y: 3}, expected: false, description: "no adjacency on right side"},
+		{topLeft: Point{X: 5, Y: 2}, bottomRight: Point{X: 7, Y: 0}, expected: false, description: "no adjacency on right side - corner case"},
+		{topLeft: Point{X: 5, Y: 4}, bottomRight: Point{X: 7, Y: 3}, expected: true, description: "adjacency on right side"},
+		{topLeft: Point{X: 3, Y: 6}, bottomRight: Point{X: 4, Y: 5}, expected: false, description: "no adjacency on top side"},
+		{topLeft: Point{X: 3, Y: 6}, bottomRight: Point{X: 4, Y: 4}, expected: true, description: "adjacency on top side"},
+		{topLeft: Point{X: -1, Y: 6}, bottomRight: Point{X: 1, Y: 5}, expected: false, description: "no adjacency on left side"},
+		{topLeft: Point{X: -1, Y: 6}, bottomRight: Point{X: 2, Y: 4}, expected: false, description: "no adjacency on left side - corner case"},
+		{topLeft: Point{X: -1, Y: 6}, bottomRight: Point{X: 2, Y: 3}, expected: true, description: "adjacency on left side"},
+		{topLeft: Point{X: 2, Y: 1}, bottomRight: Point{X: 3, Y: 0}, expected: false, description: "no adjacency on bottom side"},
+		{topLeft: Point{X: 2, Y: 2}, bottomRight: Point{X: 3, Y: 0}, expected: true, description: "adjacency on bottom side"},
+		{topLeft: Point{X: 10, Y: 10}, bottomRight: Point{X: 14, Y: 7}, expected: false, description: "no adjacency"},
+	}
+
+	for _, testCase := range tests {
+		t.Run(testCase.description, func(t *testing.T) {
+			otherRectangle, err := NewRectangle(testCase.topLeft, testCase.bottomRight)
+			assert.NoError(t, err)
+			assert.Equal(t, testCase.expected, rectangle.Adjacent(otherRectangle))
+		})
+	}
 }
