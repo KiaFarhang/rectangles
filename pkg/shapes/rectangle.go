@@ -138,13 +138,36 @@ func (r *Rectangle) PointsOfIntersection(other *Rectangle) []Point {
 	bottomRightX := min(r.bottomRight.X, other.bottomRight.X)
 	bottomRightY := max(r.bottomRight.Y, other.bottomRight.Y)
 
-	_, err := NewRectangle(Point{X: topLeftX, Y: topLeftY}, Point{X: bottomRightX, Y: bottomRightY})
+	rectangleOfIntersection, err := NewRectangle(Point{X: topLeftX, Y: topLeftY}, Point{X: bottomRightX, Y: bottomRightY})
 
 	if err != nil {
 		return []Point{}
-
 	}
-	return []Point{}
+
+	/*
+		Now, look at each corner of the rectangle of intersection. Determine if it intersects both original rectangles.
+	*/
+
+	bottomLeft := Point{X: rectangleOfIntersection.topLeft.X, Y: rectangleOfIntersection.bottomRight.Y}
+	topRight := Point{X: rectangleOfIntersection.bottomRight.X, Y: rectangleOfIntersection.topLeft.Y}
+
+	allPointsOnRectangle := []Point{rectangleOfIntersection.topLeft, rectangleOfIntersection.bottomRight, bottomLeft, topRight}
+
+	pointsOfIntersection := []Point{}
+
+	for _, point := range allPointsOnRectangle {
+		if doesPointIntersect(point, r, other) {
+			pointsOfIntersection = append(pointsOfIntersection, point)
+		}
+	}
+
+	// toReturn := []Point{}
+
+	// for _, point := range pointsOfIntersection {
+
+	// }
+
+	return pointsOfIntersection
 
 }
 
@@ -161,4 +184,20 @@ func min(a, b int) int {
 	}
 
 	return b
+}
+
+func doesPointIntersect(point Point, rectangleA *Rectangle, rectangleB *Rectangle) bool {
+	if rectangleA.topLeft.X == point.X || rectangleA.bottomRight.X == point.X {
+		if rectangleB.topLeft.Y == point.Y || rectangleB.bottomRight.Y == point.Y && (rectangleA.topLeft.Y != point.Y && rectangleA.bottomRight.Y != point.Y) {
+			return true
+		}
+	}
+
+	if rectangleA.topLeft.Y == point.Y || rectangleA.bottomRight.Y == point.Y {
+		if (rectangleB.topLeft.X == point.X || rectangleB.bottomRight.X == point.X) && (rectangleA.topLeft.X != point.X && rectangleA.bottomRight.X != point.X) {
+			return true
+		}
+	}
+
+	return false
 }
