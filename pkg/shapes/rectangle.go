@@ -73,7 +73,9 @@ func (r *Rectangle) Contains(other *Rectangle) bool {
 /*
 Adjacent returns whether this rectangle and the other rectangle provided
 share a side. Rectangles that share a corner point are NOT considered adjacent.
-This function is reversible; if a.Adjacent(b) and b.Adjacent(a) will always return the
+(Problem statement didn't specify, so I chose to implement it this way)
+
+This function is reversible; a.Adjacent(b) and b.Adjacent(a) will always return the
 same value.
 */
 func (r *Rectangle) Adjacent(other *Rectangle) bool {
@@ -135,7 +137,7 @@ intersects with the other rectangle provided, if any. The returned slice
 will be empty if the rectangles do not intersect.
 
 If two rectangles share a side (e.g. adjacency), any points on that side are NOT
-considered points of intersection.
+considered points of intersection. (Problem statement didn't specify, so I chose to implement it this way)
 */
 func (r *Rectangle) PointsOfIntersection(other *Rectangle) []Point {
 
