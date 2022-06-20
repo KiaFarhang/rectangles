@@ -21,6 +21,14 @@ type Rectangle struct {
 	bottomRight Point
 }
 
+func (r *Rectangle) getBottomLeft() Point {
+	return Point{r.topLeft.X, r.bottomRight.Y}
+}
+
+func (r *Rectangle) getTopRight() Point {
+	return Point{r.bottomRight.X, r.topLeft.Y}
+}
+
 var (
 	errInvalidRectangleCoordinates = errors.New("a rectangle's bottom-right Point must be below (lesser Y) and to the right of (greater X) than its top-left Point")
 )
@@ -161,13 +169,20 @@ func (r *Rectangle) PointsOfIntersection(other *Rectangle) []Point {
 		}
 	}
 
-	// toReturn := []Point{}
+	toReturn := []Point{}
 
-	// for _, point := range pointsOfIntersection {
+	for _, point := range pointsOfIntersection {
+		if point == r.topLeft || point == r.bottomRight || point == r.getBottomLeft() || point == r.getTopRight() {
+			continue
+		}
+		if point == other.topLeft || point == other.bottomRight || point == other.getBottomLeft() || point == other.getTopRight() {
+			continue
+		}
 
-	// }
+		toReturn = append(toReturn, point)
+	}
 
-	return pointsOfIntersection
+	return toReturn
 
 }
 
@@ -188,13 +203,13 @@ func min(a, b int) int {
 
 func doesPointIntersect(point Point, rectangleA *Rectangle, rectangleB *Rectangle) bool {
 	if rectangleA.topLeft.X == point.X || rectangleA.bottomRight.X == point.X {
-		if rectangleB.topLeft.Y == point.Y || rectangleB.bottomRight.Y == point.Y && (rectangleA.topLeft.Y != point.Y && rectangleA.bottomRight.Y != point.Y) {
+		if rectangleB.topLeft.Y == point.Y || rectangleB.bottomRight.Y == point.Y {
 			return true
 		}
 	}
 
 	if rectangleA.topLeft.Y == point.Y || rectangleA.bottomRight.Y == point.Y {
-		if (rectangleB.topLeft.X == point.X || rectangleB.bottomRight.X == point.X) && (rectangleA.topLeft.X != point.X && rectangleA.bottomRight.X != point.X) {
+		if rectangleB.topLeft.X == point.X || rectangleB.bottomRight.X == point.X {
 			return true
 		}
 	}
