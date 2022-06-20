@@ -43,8 +43,8 @@ func TestRectangle_Constructor(t *testing.T) {
 
 func TestContainment(t *testing.T) {
 	t.Run("returns true if the other rectangle is the same size and coordinates as the first", func(t *testing.T) {
-		topLeft := Point{X: 4, Y: 4}
-		bottomRight := Point{X: 6, Y: 2}
+		topLeft := Point{4, 4}
+		bottomRight := Point{6, 2}
 
 		rectangleA, err := NewRectangle(topLeft, bottomRight)
 		assert.NoError(t, err)
@@ -55,11 +55,11 @@ func TestContainment(t *testing.T) {
 		assert.True(t, rectangleA.Contains(rectangleB))
 	})
 	t.Run("returns true if the other rectangle is fully contained within the first", func(t *testing.T) {
-		topLeftA := Point{X: 2, Y: 4}
-		bottomRightA := Point{X: 5, Y: 2}
+		topLeftA := Point{2, 4}
+		bottomRightA := Point{5, 2}
 
-		topLeftB := Point{X: 3, Y: 3}
-		bottomRightB := Point{X: 4, Y: 2}
+		topLeftB := Point{3, 3}
+		bottomRightB := Point{4, 2}
 
 		rectangleA, err := NewRectangle(topLeftA, bottomRightA)
 		assert.NoError(t, err)
@@ -70,11 +70,11 @@ func TestContainment(t *testing.T) {
 		assert.True(t, rectangleA.Contains(rectangleB))
 	})
 	t.Run("returns false if the other rectangle is completely outside the first", func(t *testing.T) {
-		topLeftA := Point{X: 2, Y: 4}
-		bottomRightA := Point{X: 5, Y: 2}
+		topLeftA := Point{2, 4}
+		bottomRightA := Point{5, 2}
 
-		topLeftB := Point{X: 2, Y: 7}
-		bottomRightB := Point{X: 3, Y: 6}
+		topLeftB := Point{2, 7}
+		bottomRightB := Point{3, 6}
 
 		rectangleA, err := NewRectangle(topLeftA, bottomRightA)
 		assert.NoError(t, err)
@@ -85,11 +85,11 @@ func TestContainment(t *testing.T) {
 		assert.False(t, rectangleA.Contains(rectangleB))
 	})
 	t.Run("returns false if the other rectangle is partially contained within the first", func(t *testing.T) {
-		topLeftA := Point{X: 2, Y: 4}
-		bottomRightA := Point{X: 5, Y: 2}
+		topLeftA := Point{2, 4}
+		bottomRightA := Point{5, 2}
 
-		topLeftB := Point{X: 3, Y: 3}
-		bottomRightB := Point{X: 6, Y: 2}
+		topLeftB := Point{3, 3}
+		bottomRightB := Point{6, 2}
 
 		rectangleA, err := NewRectangle(topLeftA, bottomRightA)
 		assert.NoError(t, err)
@@ -102,7 +102,7 @@ func TestContainment(t *testing.T) {
 }
 
 func TestAdjacency(t *testing.T) {
-	rectangle, _ := NewRectangle(Point{X: 2, Y: 4}, Point{X: 5, Y: 2})
+	rectangle, _ := NewRectangle(Point{2, 4}, Point{5, 2})
 	type test struct {
 		topLeft     Point
 		bottomRight Point
@@ -110,17 +110,17 @@ func TestAdjacency(t *testing.T) {
 		description string
 	}
 	tests := []test{
-		{topLeft: Point{X: 6, Y: 4}, bottomRight: Point{X: 7, Y: 3}, expected: false, description: "no adjacency on right side"},
-		{topLeft: Point{X: 5, Y: 2}, bottomRight: Point{X: 7, Y: 0}, expected: false, description: "no adjacency on right side - corner case"},
-		{topLeft: Point{X: 5, Y: 4}, bottomRight: Point{X: 7, Y: 3}, expected: true, description: "adjacency on right side"},
-		{topLeft: Point{X: 3, Y: 6}, bottomRight: Point{X: 4, Y: 5}, expected: false, description: "no adjacency on top side"},
-		{topLeft: Point{X: 3, Y: 6}, bottomRight: Point{X: 4, Y: 4}, expected: true, description: "adjacency on top side"},
-		{topLeft: Point{X: -1, Y: 6}, bottomRight: Point{X: 1, Y: 5}, expected: false, description: "no adjacency on left side"},
-		{topLeft: Point{X: -1, Y: 6}, bottomRight: Point{X: 2, Y: 4}, expected: false, description: "no adjacency on left side - corner case"},
-		{topLeft: Point{X: -1, Y: 6}, bottomRight: Point{X: 2, Y: 3}, expected: true, description: "adjacency on left side"},
-		{topLeft: Point{X: 2, Y: 1}, bottomRight: Point{X: 3, Y: 0}, expected: false, description: "no adjacency on bottom side"},
-		{topLeft: Point{X: 2, Y: 2}, bottomRight: Point{X: 3, Y: 0}, expected: true, description: "adjacency on bottom side"},
-		{topLeft: Point{X: 10, Y: 10}, bottomRight: Point{X: 14, Y: 7}, expected: false, description: "no adjacency"},
+		{topLeft: Point{6, 4}, bottomRight: Point{7, 3}, expected: false, description: "no adjacency on right side"},
+		{topLeft: Point{5, 2}, bottomRight: Point{7, 0}, expected: false, description: "no adjacency on right side - corner case"},
+		{topLeft: Point{5, 4}, bottomRight: Point{7, 3}, expected: true, description: "adjacency on right side"},
+		{topLeft: Point{3, 6}, bottomRight: Point{4, 5}, expected: false, description: "no adjacency on top side"},
+		{topLeft: Point{3, 6}, bottomRight: Point{4, 4}, expected: true, description: "adjacency on top side"},
+		{topLeft: Point{-1, 6}, bottomRight: Point{1, 5}, expected: false, description: "no adjacency on left side"},
+		{topLeft: Point{-1, 6}, bottomRight: Point{2, 4}, expected: false, description: "no adjacency on left side - corner case"},
+		{topLeft: Point{-1, 6}, bottomRight: Point{2, 3}, expected: true, description: "adjacency on left side"},
+		{topLeft: Point{2, 1}, bottomRight: Point{3, 0}, expected: false, description: "no adjacency on bottom side"},
+		{topLeft: Point{2, 2}, bottomRight: Point{3, 0}, expected: true, description: "adjacency on bottom side"},
+		{topLeft: Point{10, 10}, bottomRight: Point{14, 7}, expected: false, description: "no adjacency"},
 	}
 
 	for _, testCase := range tests {
@@ -144,11 +144,11 @@ func TestPointsOfIntersection(t *testing.T) {
 	}
 
 	tests := []test{
-		{topLeftA: Point{X: 4, Y: 7}, bottomRightA: Point{X: 6, Y: 4}, topLeftB: Point{X: 2, Y: 5}, bottomRightB: Point{X: 5, Y: 3}, pointsOfIntersection: []Point{{X: 4, Y: 5}, {X: 5, Y: 4}}},
-		{topLeftA: Point{X: 3, Y: 6}, bottomRightA: Point{X: 6, Y: 3}, topLeftB: Point{X: 4, Y: 7}, bottomRightB: Point{X: 7, Y: 4}, pointsOfIntersection: []Point{{X: 4, Y: 6}, {X: 6, Y: 4}}},
-		{topLeftA: Point{X: -4, Y: 4}, bottomRightA: Point{X: 2, Y: 2}, topLeftB: Point{X: -2, Y: 3}, bottomRightB: Point{X: 2, Y: 0}, pointsOfIntersection: []Point{{X: -2, Y: 2}}},
-		{topLeftA: Point{X: 1, Y: 3}, bottomRightA: Point{X: 2, Y: 2}, topLeftB: Point{X: 1, Y: 1}, bottomRightB: Point{X: 4, Y: 0}, pointsOfIntersection: []Point{}},
-		{topLeftA: Point{-2, 10}, bottomRightA: Point{2, 5}, topLeftB: Point{-3, 8}, bottomRightB: Point{3, 6}, pointsOfIntersection: []Point{Point{-2, 8}, Point{-2, 6}, Point{2, 8}, Point{2, 6}}},
+		{topLeftA: Point{4, 7}, bottomRightA: Point{6, 4}, topLeftB: Point{2, 5}, bottomRightB: Point{5, 3}, pointsOfIntersection: []Point{{4, 5}, {5, 4}}},
+		{topLeftA: Point{3, 6}, bottomRightA: Point{6, 3}, topLeftB: Point{4, 7}, bottomRightB: Point{7, 4}, pointsOfIntersection: []Point{{4, 6}, {6, 4}}},
+		{topLeftA: Point{-4, 4}, bottomRightA: Point{2, 2}, topLeftB: Point{-2, 3}, bottomRightB: Point{2, 0}, pointsOfIntersection: []Point{{-2, 2}}},
+		{topLeftA: Point{1, 3}, bottomRightA: Point{2, 2}, topLeftB: Point{1, 1}, bottomRightB: Point{4, 0}, pointsOfIntersection: []Point{}},
+		{topLeftA: Point{-2, 10}, bottomRightA: Point{2, 5}, topLeftB: Point{-3, 8}, bottomRightB: Point{3, 6}, pointsOfIntersection: []Point{{-2, 8}, {-2, 6}, Point{2, 8}, Point{2, 6}}},
 	}
 
 	for _, testCase := range tests {
