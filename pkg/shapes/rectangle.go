@@ -127,5 +127,38 @@ intersects with the other rectangle provided, if any. The returned slice
 will be empty if the rectangles do not intersect.
 */
 func (r *Rectangle) PointsOfIntersection(other *Rectangle) []Point {
+	// https://stackoverflow.com/questions/19753134/get-the-points-of-intersection-from-2-rectangles
+	// https://medium.com/@jessgillan/algorithm-practice-rectangle-intersection-7821411fd114
+
+	// Find the rectangle of intersection. If the two rectangles do NOT intercept, this will result
+	// in an error
+
+	topLeftX := max(r.topLeft.X, other.topLeft.X)
+	topLeftY := min(r.topLeft.Y, other.topLeft.Y)
+	bottomRightX := min(r.bottomRight.X, other.bottomRight.X)
+	bottomRightY := max(r.bottomRight.Y, other.bottomRight.Y)
+
+	_, err := NewRectangle(Point{X: topLeftX, Y: topLeftY}, Point{X: bottomRightX, Y: bottomRightY})
+
+	if err != nil {
+		return []Point{}
+
+	}
 	return []Point{}
+
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+
+	return b
 }
