@@ -138,6 +138,9 @@ will be empty if the rectangles do not intersect.
 
 If two rectangles share a side (e.g. adjacency), any points on that side are NOT
 considered points of intersection. (Problem statement didn't specify, so I chose to implement it this way)
+
+This function is reversible; a.PointsOfIntersection(b) and b.PointsofIntersection(a)
+will always return the same values in the slice.
 */
 func (r *Rectangle) PointsOfIntersection(other *Rectangle) []Point {
 

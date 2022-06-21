@@ -160,8 +160,13 @@ func TestPointsOfIntersection(t *testing.T) {
 
 		pointsOfIntersection := rectangleA.PointsOfIntersection(rectangleB)
 		assert.Len(t, pointsOfIntersection, len(testCase.pointsOfIntersection))
+
+		// Like adjacency, intersection should give the same results both ways
+		reversedPointsOfIntersection := rectangleB.PointsOfIntersection(rectangleA)
+		assert.Len(t, reversedPointsOfIntersection, len(testCase.pointsOfIntersection))
 		for _, point := range testCase.pointsOfIntersection {
 			assert.Contains(t, pointsOfIntersection, point)
+			assert.Contains(t, reversedPointsOfIntersection, point)
 		}
 	}
 }
