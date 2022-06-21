@@ -5,6 +5,7 @@ package shapes
 
 import (
 	"errors"
+	"fmt"
 )
 
 /*
@@ -27,6 +28,10 @@ func (r *Rectangle) getBottomLeft() Point {
 
 func (r *Rectangle) getTopRight() Point {
 	return Point{r.bottomRight.X, r.topLeft.Y}
+}
+
+func (r Rectangle) String() string {
+	return fmt.Sprintf("Top left: X = %d, Y = %d | Bottom right: X = %d, Y = %d", r.topLeft.X, r.topLeft.Y, r.bottomRight.X, r.bottomRight.Y)
 }
 
 var (
