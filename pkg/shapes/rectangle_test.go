@@ -148,7 +148,7 @@ func TestPointsOfIntersection(t *testing.T) {
 		{topLeftA: Point{3, 6}, bottomRightA: Point{6, 3}, topLeftB: Point{4, 7}, bottomRightB: Point{7, 4}, pointsOfIntersection: []Point{{4, 6}, {6, 4}}},
 		{topLeftA: Point{-4, 4}, bottomRightA: Point{2, 2}, topLeftB: Point{-2, 3}, bottomRightB: Point{2, 0}, pointsOfIntersection: []Point{{-2, 2}}},
 		{topLeftA: Point{1, 3}, bottomRightA: Point{2, 2}, topLeftB: Point{1, 1}, bottomRightB: Point{4, 0}, pointsOfIntersection: []Point{}},
-		{topLeftA: Point{-2, 10}, bottomRightA: Point{2, 5}, topLeftB: Point{-3, 8}, bottomRightB: Point{3, 6}, pointsOfIntersection: []Point{{-2, 8}, {-2, 6}, Point{2, 8}, Point{2, 6}}},
+		{topLeftA: Point{-2, 10}, bottomRightA: Point{2, 5}, topLeftB: Point{-3, 8}, bottomRightB: Point{3, 6}, pointsOfIntersection: []Point{{-2, 8}, {-2, 6}, {2, 8}, {2, 6}}},
 	}
 
 	for _, testCase := range tests {
